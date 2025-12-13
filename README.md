@@ -1,4 +1,4 @@
-#  Predicting Auto Claims Severity
+# Allstate: Predicting Auto Claims Severity 
 
 ### 👥 **Team Members**
 
@@ -73,11 +73,13 @@ The primary objective was to address the challenge of predicting insurance claim
 
 **Data Exploration and Preprocessing**
 - Target (loss) was right-skewed, hence we applied log transformation
-- We explored features using heatmap, correlation matrix, boxplots, etc.
+- We explored features using heatmap, correlation matrix, boxplots, etc. During this process, we divided the feature exploration (eg. One person would analyze cat1-cat18 and another person would analyze cat19-cat25)
 - The exploratory data analysis helped us idenitfy pre-processing steps to feed a clean dataset to train and test our models.
 - Some challenges we faced when working with these datasets was understanding what the data and features mean (since it's anonymized).
 
-![alt text](target.png)
+![alt text](images/target.png)
+
+![alt text](images/heatmap.png)
 ---
 
 ## 🧠 **Model Development**
@@ -113,6 +115,20 @@ The primary objective was to address the challenge of predicting insurance claim
 
         - LightGBM: Filtered for the Top 30 features while tuning hyperparameters to maximize the model's efficiency on the high-dimensional data.
 
+4. **Code Highlights**
+
+    - Here is a brief overview of the key files and folders in this project:
+
+            ├── ahmed_tensorflow/         # Deep Learning models (Neural Networks) implementation
+            ├── audrey_lightgbm/          # LightGBM model & high-performance gradient boosting
+            ├── data/                     # (Ignored by Git) Folder for raw CSV datasets
+            |__images/                    # Contains screenshots that were added to README.md file
+            ├── minh_general_linear.../   # GLM baseline models
+            ├── samikha_random_forest/    # Random Forest implementation
+            ├── sanchita_xgboost/         # XGBoost model & feature importance selection
+            ├── shemarie_lasso_reg.../    # Lasso Regression (L1 regularization)
+            ├── tahia_ridge_regr.../      # Ridge Regression (L2 regularization) & EDA Notebooks
+            ├── README.md                 # Project documentation
 
 ---
 
@@ -133,6 +149,18 @@ Here's a table of each model and its performance metrics
 | **Elastic Net** | $1,243.09|
 
 **Insight:** All models outperform the baseline mean MAE of 1970.11, with tree-based and deep learning models capturing nonlinear relationships more effectively than linear methods. We determined the best performing model, **LightGBM**, by Mean Absolute Error. 
+
+💬 **Discussion & Reflection**
+
+**What Worked Well:**
+
+- **Ensemble Methods**: Moving from linear models to tree-based ensembles (LightGBM, XGBoost) was the turning point in our project. These models successfully captured the complex, non-linear interactions between anonymized features, driving our MAE down by ~40% compared to the baseline.
+
+- **Target Transformation**: Applying a log1p transformation to the loss variable was critical. Since insurance data is heavily skewed (many small claims, few massive ones), this normalization allowed our models to converge much faster and stabilized the training process.
+
+**What Didn't Work:**
+
+- **Linear Ceilings**: Despite rigorous hyperparameter tuning (GridSearchCV) on Ridge and Lasso regression, we hit a "performance glass ceiling" at ~$1,200 - ~$1300 MAE. This confirmed that the underlying relationship between claim characteristics and cost is fundamentally non-linear
 
 ---
 
